@@ -104,7 +104,12 @@ loginWithEmail = async function(email, password, onSuccess, onError) {
   }
   const { data, error } = await sumoSupabase.auth.signInWithPassword({ email, password });
   if (error) {
-    if (onError) onError(supabaseAuthErrorCode(error));
+    const mapped = supabaseAuthErrorCode(error);
+    if (mapped === 'auth/email-not-confirmed') {
+      setAuthPanelMessage('יש לאשר קודם את כתובת האימייל דרך ההודעה שנשלחה אליך.');
+      return;
+    }
+    if (onError) onError(mapped);
     return;
   }
   applySupabaseUser(data.user);
@@ -131,14 +136,13 @@ registerWithEmail = async function(email, password, name, onSuccess, onError) {
     return;
   }
 
-  if (data.user) applySupabaseUser(data.user);
-
-  // Supabase commonly requires email confirmation. In that case no session is returned yet.
+  // If email confirmation is enabled, Supabase returns a user but no active session.
   if (!data.session) {
     setAuthPanelMessage('✅ ההרשמה הצליחה. נשלח אליך מייל אימות — פתח אותו ואז התחבר.', true);
     return;
   }
 
+  if (data.user) applySupabaseUser(data.user);
   if (onSuccess) onSuccess();
 };
 
