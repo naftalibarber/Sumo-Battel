@@ -7,8 +7,7 @@
   <link rel="manifest" href="manifest.json">
   <title>קרב סומו</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
@@ -43,6 +42,7 @@
     <table class="stats-table" id="pp-stats"></table>
     <div style="margin-top:12px">
       <button class="btn btn-gold" id="pp-edit-btn">✏️ ערוך שם</button>
+      <button class="btn btn-blue" id="pp-email-btn">📧 אימייל וסיסמה</button>
       <button class="btn btn-blue" id="pp-google-btn">🔵 התחבר עם Google</button>
       <button class="btn btn-gray" id="pp-close-btn">🚪 סגור</button>
     </div>
@@ -61,6 +61,7 @@
 <button id="music-btn">🔇</button>
 <button id="fullscreen-btn">⛶</button>
 <script src="assets/js/game.js"></script>
+<script src="assets/js/supabase-auth.js"></script>
 <script src="assets/js/mobile.js"></script>
 </body>
 </html>
