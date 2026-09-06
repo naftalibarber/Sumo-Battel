@@ -10,6 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/profile.css">
 </head>
 <body oncontextmenu="return false">
 <input type="file" id="avatar-input" accept="image/*" style="display:none">
@@ -32,28 +33,51 @@
 <div id="profile-overlay"></div>
 <div id="profile-panel">
   <div id="pp-stats-view">
-    <div class="avatar-wrap" id="pp-avatar-wrap">
+    <div class="avatar-wrap" id="pp-avatar-wrap" title="עריכת חשבון ואווטאר">
       <div class="av-placeholder" id="pp-avatar-placeholder">👤</div>
       <img id="pp-avatar-img" alt="תמונת פרופיל" style="display:none">
-      <div class="av-overlay">שנה</div>
+      <div class="av-overlay">✏️ ערוך</div>
     </div>
     <h2 id="pp-name">שחקן</h2>
+    <div id="pp-account-badge" class="profile-account-badge">🎮 פרופיל מקומי</div>
     <div class="email" id="pp-email" style="display:none"></div>
     <table class="stats-table" id="pp-stats"></table>
-    <div style="margin-top:12px">
-      <button class="btn btn-gold" id="pp-edit-btn">✏️ ערוך שם</button>
+    <div class="profile-action-row">
+      <button class="btn btn-gold" id="pp-edit-btn">✏️ עריכת חשבון</button>
       <button class="btn btn-blue" id="pp-email-btn">📧 אימייל וסיסמה</button>
       <button class="btn btn-blue" id="pp-google-btn">🔵 התחבר עם Google</button>
       <button class="btn btn-gray" id="pp-close-btn">🚪 סגור</button>
     </div>
   </div>
+
   <div id="pp-edit-view" style="display:none">
-    <h2>✏️ ערוך שם</h2>
-    <div style="margin:18px 0">
-      <input type="text" id="pp-name-input" maxlength="16" placeholder="שם...">
+    <h2>✏️ עריכת חשבון</h2>
+    <div class="profile-editor-subtitle">שנה שם ובחר איך ייראה האווטאר שלך</div>
+
+    <div class="profile-edit-section">
+      <label class="profile-edit-label" for="pp-name-input">שם שחקן</label>
+      <input type="text" id="pp-name-input" maxlength="16" placeholder="שם..." autocomplete="nickname">
     </div>
-    <button class="btn btn-gold" id="pp-save-btn">💾 שמור</button>
-    <button class="btn btn-gray" id="pp-cancel-btn">ביטול</button>
+
+    <div class="profile-edit-section">
+      <span class="profile-edit-label">אווטאר</span>
+      <div class="profile-avatar-editor">
+        <div id="pp-edit-avatar-preview" aria-label="תצוגה מקדימה של האווטאר">🥋</div>
+        <div class="profile-avatar-options">
+          <div class="profile-avatar-toolbar">
+            <button type="button" id="pp-upload-avatar-btn">📷 העלאת תמונה</button>
+            <button type="button" id="pp-use-google-photo-btn">🔵 תמונת Google</button>
+          </div>
+          <div id="pp-emoji-grid" aria-label="בחירת אימוג׳י"></div>
+          <div class="profile-avatar-note">אפשר לבחור אימוג׳י במקום להעלות תמונה. אימוג׳י נשמר גם במטא־דאטה של החשבון המחובר; תמונה שהועלתה נשמרת כרגע במכשיר.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-edit-actions">
+      <button class="btn btn-gold" id="pp-save-btn">💾 שמור שינויים</button>
+      <button class="btn btn-gray" id="pp-cancel-btn">ביטול</button>
+    </div>
   </div>
 </div>
 <button id="lang-btn">🌐 EN</button>
@@ -62,6 +86,7 @@
 <button id="fullscreen-btn">⛶</button>
 <script src="assets/js/game.js"></script>
 <script src="assets/js/supabase-auth.js"></script>
+<script src="assets/js/profile-upgrade.js"></script>
 <script src="assets/js/mobile.js"></script>
 </body>
 </html>
