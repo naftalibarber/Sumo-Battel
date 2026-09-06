@@ -1,0 +1,229 @@
+/* Responsive layout for Sumo Battle — keeps the 900x650 game coordinate system intact. */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100svh;
+  overflow: hidden;
+  touch-action: none;
+}
+
+canvas {
+  display: block;
+  width: min(100vw, calc(100dvh * 1.3846153846));
+  height: min(100dvh, calc(100vw / 1.3846153846));
+  max-width: 100vw;
+  max-height: 100dvh;
+  object-fit: contain;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Keep HTML dialogs usable on short laptops and mobile browsers. */
+#profile-panel,
+#auth-panel {
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+#profile-panel input[type="text"] {
+  max-width: 100%;
+}
+
+/* On-screen mobile controller. Created by assets/js/mobile.js. */
+#touch-controls {
+  position: fixed;
+  inset: 0;
+  z-index: 850;
+  display: none;
+  pointer-events: none;
+  font-family: Arial, sans-serif;
+}
+
+body.touch-device #touch-controls.is-visible {
+  display: block;
+}
+
+#touch-controls button {
+  pointer-events: auto;
+  border: 2px solid rgba(255, 224, 100, 0.72);
+  background: rgba(10, 10, 18, 0.68);
+  color: #fff4b0;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 16px;
+  font: 700 20px/1 Arial, sans-serif;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#touch-controls button:active,
+#touch-controls button.is-pressed {
+  transform: scale(0.94);
+  background: rgba(255, 214, 70, 0.30);
+  border-color: rgba(255, 235, 150, 1);
+}
+
+#touch-dpad {
+  position: absolute;
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-columns: repeat(3, clamp(44px, 10.5vmin, 58px));
+  grid-template-rows: repeat(3, clamp(44px, 10.5vmin, 58px));
+  gap: 4px;
+  pointer-events: none;
+}
+
+#touch-dpad button {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+#touch-up    { grid-column: 2; grid-row: 1; }
+#touch-left  { grid-column: 1; grid-row: 2; }
+#touch-down  { grid-column: 2; grid-row: 2; }
+#touch-right { grid-column: 3; grid-row: 2; }
+
+#touch-actions {
+  position: absolute;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+#touch-actions button {
+  min-width: 86px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+
+#touch-restart {
+  border-color: rgba(100, 205, 255, 0.72) !important;
+  color: #bfeaff !important;
+}
+
+#touch-controls [hidden] {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  #lang-btn,
+  #profile-btn,
+  #music-btn,
+  #fullscreen-btn {
+    top: max(7px, env(safe-area-inset-top));
+    padding: 6px 9px;
+    border-width: 1.5px;
+    min-height: 34px;
+  }
+
+  #lang-btn {
+    left: max(7px, env(safe-area-inset-left));
+    font-size: 11px;
+  }
+
+  #profile-btn {
+    left: max(71px, calc(env(safe-area-inset-left) + 71px));
+    max-width: 132px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11px;
+  }
+
+  #fullscreen-btn {
+    right: max(7px, env(safe-area-inset-right));
+    font-size: 14px;
+  }
+
+  #music-btn {
+    right: max(51px, calc(env(safe-area-inset-right) + 51px));
+    font-size: 13px;
+  }
+
+  #profile-panel {
+    width: calc(100vw - 18px);
+    max-width: none;
+    padding: 18px 12px;
+    border-radius: 14px;
+  }
+
+  #profile-panel .stats-table {
+    font-size: 11px;
+  }
+
+  #profile-panel .stats-table td {
+    padding: 5px 3px;
+  }
+
+  #profile-panel .btn {
+    padding: 8px 12px;
+    margin: 3px 1px;
+    font-size: 12px;
+  }
+
+  #auth-panel {
+    width: calc(100vw - 24px);
+    max-width: none;
+    padding: 22px 18px;
+  }
+}
+
+/* In landscape phones, reserve the side gutters for the touch controller. */
+@media (pointer: coarse) and (orientation: landscape) and (max-height: 520px) {
+  body.touch-device canvas {
+    width: min(calc(100vw - 240px), calc(100dvh * 1.3846153846));
+    height: min(100dvh, calc((100vw - 240px) / 1.3846153846));
+  }
+
+  #touch-dpad {
+    left: max(8px, env(safe-area-inset-left));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    grid-template-columns: repeat(3, clamp(40px, 12vmin, 50px));
+    grid-template-rows: repeat(3, clamp(40px, 12vmin, 50px));
+  }
+
+  #touch-actions {
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(10px, env(safe-area-inset-bottom));
+  }
+
+  #touch-actions button {
+    min-width: 76px;
+    min-height: 42px;
+    font-size: 12px;
+  }
+}
+
+@media (pointer: coarse) and (orientation: portrait) {
+  #touch-dpad {
+    bottom: max(18px, env(safe-area-inset-bottom));
+  }
+
+  #touch-actions {
+    bottom: max(22px, env(safe-area-inset-bottom));
+  }
+}
